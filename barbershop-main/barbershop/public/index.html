@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberCraft - Бръснарски Принадлежности, Логин & Регистрация</title>
+    
+    <!-- Шрифтове и Икони -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=600;700;900&family=Montserrat:wght=300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- BarberSector Стилове -->
+    <style>
+        :root {
+            --bg-dark: #111111;
+            --bg-light-gray: #f8f9fa;
+            --gold-premium: #d4af37;
+            --gold-hover: #b89321;
+            --text-dark: #1c1c1c;
+            --text-muted: #666666;
+            --font-serif: 'Cinzel', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-light-gray);
+            color: var(--text-dark);
+        }
+
+        /* Навигация */
+        .navbar {
+            background-color: var(--bg-dark) !important;
+            border-bottom: 2px solid var(--gold-premium);
+            padding: 15px 0;
+        }
+        .navbar-brand {
+            font-family: var(--font-serif);
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #ffffff !important;
+        }
+        .nav-link {
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 13px;
+            color: #cccccc !important;
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--gold-premium) !important;
+        }
+
+        /* Бутони */
+        .btn-gold {
+            background-color: var(--gold-premium);
+            color: var(--bg-dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        .btn-gold:hover {
+            background-color: var(--gold-hover);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .btn-dark-premium {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            border: 1px solid var(--gold-premium);
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .btn-dark-premium:hover {
+            background-color: var(--gold-premium);
+            color: var(--bg-dark);
+        }
+
+        /* Категории филтри */
+        .category-pill {
+            background-color: #ffffff;
+            color: var(--bg-dark);
+            border: 1px solid #e0e0e0;
+            padding: 8px 20px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .category-pill:hover, .category-pill.active {
+            background-color: var(--bg-dark);
+            color: var(--gold-premium);
+            border-color: var(--bg-dark);
+        }
+
+        /* Hero секция */
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+            color: #ffffff;
+            padding: 160px 0;
+            border-bottom: 3px solid var(--gold-premium);
+        }
+        .hero-section h1 {
+            font-family: var(--font-serif);
+            font-weight: 900;
+            font-size: 4rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        /* Продуктови карти */
+        .product-card {
+            border: none;
+            border-radius: 0;
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .product-image-container {
+            position: relative;
+            overflow: hidden;
+            background: #f1f1f1;
+            height: 250px;
+        }
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+        .card-title-serif {
+            font-family: var(--font-serif);
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* Заглавия на Секции */
+        .section-title {
+            font-family: var(--font-serif);
+            font-weight: 900;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--gold-premium);
+        }
+
+        /* Ревюта */
+        .review-card {
+            background: #ffffff;
+            border-left: 4px solid var(--gold-premium);
+            border-radius: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            padding: 25px !important;
+        }
+        .quote-icon {
+            color: rgba(212, 175, 55, 0.2);
+            font-size: 2rem;
+            line-height: 0;
+        }
+        .stars-container {
+            color: var(--gold-premium);
+            font-size: 0.9rem;
+        }
+
+        /* Модали */
+        .modal-content {
+            border-radius: 0;
+            border: 2px solid var(--gold-premium);
+        }
+        .modal-header {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            border-bottom: 1px solid var(--gold-premium);
+            border-radius: 0;
+        }
+
+        /* Линкове за превключване в модала */
+        .auth-switch-link {
+            color: var(--gold-premium);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .auth-switch-link:hover {
+            color: var(--gold-hover);
+            text-decoration: underline;
+        }
+
+        /* Футър */
+        footer {
+            background-color: var(--bg-dark) !important;
+            color: #888888 !important;
+            border-top: 1px solid #222222;
+            padding: 30px 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <!-- Библиотеки -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const { useState, useEffect } = React;
+        const e = React.createElement;
+
+        const INITIAL_PRODUCTS = [
+            { id: 1, name: "Професионална машинка 'Gold Shaver Pro'", category: "Машинки", price: 115.00, image: "images/mashinka.jpg", description: "Златно титаниево покритие, мощен роторен мотор и 4 часа издръжливост на батерията." },
+            { id: 2, name: "Прецизен тример за детайли 'Sektor-T'", category: "Машинки", price: 75.00, image: "images/trimer.jpg", description: "Идеален за фини линии, контури на брада и детайлни арт бръснения около ушите." },
+            { id: 3, name: "Класически опасен бръснач 'Скандинавия'", category: "Бръсначи", price: 35.00, image: "images/opasenbrusnach.jpg", description: "Ръчно кована въглеродна стомана с ергономична дръжка от тъмен махагон." },
+            { id: 4, name: "Професионален Шавет (Японски стил)", category: "Бръсначи", price: 19.90, image: "images/shavet.jpg", description: "Бръснач со сменяеми ножчета, осигуряващ перфектен баланс и хирургическа точност." },
+            { id: 5, name: "Помада за коса 'Heavy Hold Premium'", category: "Стилизиране", price: 14.90, image: "images/pomada.jpg", description: "Екстремна фиксация с класически мъжки аромат. Лесна за отмиване формула на водна основа." },
+            { id: 6, name: "Матова глина за текстура 'Dry Matte'", category: "Стилизиране", price: 13.50, image: "images/glina.jpg", description: "Придава модерен, естествен и матов завършек без блясък. Перфектна за къси прически." },
+            { id: 7, name: "Премиум масло за брада 'Ariance'", category: "Грижа", price: 12.90, image: "images/brada.jpg", description: "Комбинация от арганово и бадемово масло за дълбока хидратация и блясък на косъма." },
+            { id: 8, name: "Освежаващ одеколон за след бръснене", category: "Грижа", price: 16.50, image: "images/odekolon.jpg", description: "Успокоява зачервената кожа, затваря порите и оставя дълготраен, свеж цитрусов аромат." },
+            { id: 9, name: "Фризьорски ножици 'Master 6.0'", category: "Инструменти", price: 59.00, image: "images/nojici.jpg", description: "Професионални японски ножици от стомана 440C за плавно и безупречно подстригване." },
+            { id: 10, name: "Четка за бръснене от естествен косъм", category: "Инструменти", price: 22.00, image: "images/chetka.jpg", description: "Генерира богата и гъста штатна пяна. Луксозна дървена дръжка со златен ринг." },
+            { id: 11, name: "Бръснарски стол 'Vintage Sektor'", category: "Оборудване", price: 640.00, image: "images/stol.jpg", description: "Хидравличен луксозен стол от еко кожа и хромирани детайли. Накланяне до 135 градуса." },
+            { id: 12, name: "Нагревател за кърпи 'Sektor Hot Towel'", category: "Оборудване", price: 89.00, image: "images/nagrevatel.jpg", description: "Професионален нагревател с UV стерилизация за перфектни топли компреси." }
+        ];
+
+        const INITIAL_REVIEWS = [
+            { id: 1, author: "Бръснарница 'The Blade'", rating: 5, comment: "Столът Vintage Sektor промени изцяло визията на салона ни. Клиентите са очаровани!" },
+            { id: 2, author: "Ивайло Петров", rating: 4, comment: "Глината Dry Matte е най-доброто, което съм ползвал за моята гъста коса. Държи цял ден." }
+        ];
+
+        const CATEGORIES = ["Всички", "Машинки", "Бръсначи", "Стилизиране", "Грижа", "Инструменти", "Оборудване"];
+
+        function App() {
+            const [products, setProducts] = useState(() => {
+                const saved = localStorage.getItem('barber_products');
+                return saved ? JSON.parse(saved) : INITIAL_PRODUCTS;
+            });
+
+            const [reviews, setReviews] = useState(() => {
+                const saved = localStorage.getItem('barber_reviews');
+                return saved ? JSON.parse(saved) : INITIAL_REVIEWS;
+            });
+
+            // СЪСТОЯНИЕ ЗА ПОТРЕБИТЕЛИ (БАЗА ДАННИ И СЕСИЯ)
+            const [registeredUsers, setRegisteredUsers] = useState(() => {
+                const saved = localStorage.getItem('barber_users');
+                // По подразбиране добавяме един примерен клиент, за да има начални данни
+                return saved ? JSON.parse(saved) : [{ username: 'client', password: 'client2026', name: 'Георги' }];
+            });
+
+            const [userRole, setUserRole] = useState('guest'); 
+            const [loggedInUser, setLoggedInUser] = useState(''); 
+            const [cart, setCart] = useState([]);
+            const [currentPage, setCurrentPage] = useState('home');
+            const [searchQuery, setSearchQuery] = useState('');
+            const [selectedCategory, setSelectedCategory] = useState('Всички');
+            
+            // Форми и състояния за автентикация
+            const [authMode, setAuthMode] = useState('login'); // 'login' или 'register'
+            const [username, setUsername] = useState('');
+            const [password, setPassword] = useState('');
+            const [regName, setRegName] = useState(''); // За рег: Истинско име
+            const [authError, setAuthError] = useState('');
+            const [orderSubmitted, setOrderSubmitted] = useState(false);
+
+            useEffect(() => {
+                localStorage.setItem('barber_products', JSON.stringify(products));
+            }, [products]);
+
+            useEffect(() => {
+                localStorage.setItem('barber_reviews', JSON.stringify(reviews));
+            }, [reviews]);
+
+            // Синхронизация на потребителите с localStorage
+            useEffect(() => {
+                localStorage.setItem('barber_users', JSON.stringify(registeredUsers));
+            }, [registeredUsers]);
+
+            // ФУНКЦИЯ ЗА ВХОД С ДИНАМИЧНА ПРОВЕРКА ОТ LOCALSTORAGE
+            const handleLogin = (ev) => {
+                ev.preventDefault();
+                setAuthError('');
+
+                // 1. Проверка за главен администратор
+                if (username === "admin" && password === "barber2026") {
+                    setUserRole('admin');
+                    setLoggedInUser('Администратор');
+                    setCurrentPage('admin');
+                    closeAuthModal();
+                    return;
+                }
+
+                // 2. Проверка в регистрираните потребители в localStorage
+                const foundUser = registeredUsers.find(u => u.username === username && u.password === password);
+                
+                if (foundUser) {
+                    setUserRole('client');
+                    setLoggedInUser(foundUser.name);
+                    closeAuthModal();
+                } else {
+                    setAuthError("Грешно потребителско име или парола!");
+                }
+            };
+
+            // ФУНКЦИЯ ЗА РЕГИСТРАЦИЯ
+            const handleRegister = (ev) => {
+                ev.preventDefault();
+                setAuthError('');
+
+                // Забрана за име 'admin'
+                if (username.toLowerCase() === 'admin') {
+                    setAuthError("Потребителското име 'admin' е запазено!");
+                    return;
+                }
+
+                // Проверка дали потребителското име вече съществува
+                const userExists = registeredUsers.some(u => u.username === username);
+                if (userExists) {
+                    setAuthError("Това потребителско име вече е заето!");
+                    return;
+                }
+
+                // Добавяне на новия потребител
+                const newUser = { username, password, name: regName };
+                setRegisteredUsers([...registeredUsers, newUser]);
+                
+                // Автоматичен вход след успешна регистрация
+                setUserRole('client');
+                setLoggedInUser(regName);
+                closeAuthModal();
+                alert("Регистрацията е успешна! Добре дошли в BarberCraft.");
+            };
+
+            const closeAuthModal = () => {
+                const modalEl = document.getElementById('authModal');
+                const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                modal.hide();
+                // Нулиране на полетата
+                setUsername('');
+                setPassword('');
+                setRegName('');
+                setAuthError('');
+                setAuthMode('login');
+            };
+
+            const handleLogout = () => {
+                setUserRole('guest');
+                setLoggedInUser('');
+                setCurrentPage('home');
+            };
+
+            const removeFromCart = (indexToRemove) => {
+                setCart(cart.filter((_, idx) => idx !== indexToRemove));
+            };
+
+            const cartTotal = cart.reduce((total, item) => total + item.price, 0);
+            
+            const filteredProducts = products.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+                const matchesCategory = selectedCategory === "Всички" || p.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            return e('div', { className: 'd-flex flex-column min-vh-100' },
+                // НАВИГАЦИЯ
+                e('nav', { className: 'navbar navbar-expand-lg navbar-dark sticky-top shadow' },
+                    e('div', { className: 'container' },
+                        e('a', { className: 'navbar-brand d-flex align-items-center', href: '#', onClick: () => setCurrentPage('home') },
+                            e('i', { className: 'fa-solid fa-scissors text-warning me-2' }), "BARBERCRAFT"
+                        ),
+                        e('div', { className: 'navbar-nav me-auto ms-4' },
+                            e('a', { className: `nav-link ${currentPage === 'home' ? 'active' : ''}`, href: '#', onClick: () => setCurrentPage('home') }, "Начало"),
+                            e('a', { className: `nav-link ${currentPage === 'shop' ? 'active' : ''}`, href: '#', onClick: () => setCurrentPage('shop') }, "Каталог & Отзиви"),
+                            userRole === 'admin' && e('a', { className: 'nav-link text-warning fw-bold', href: '#', onClick: () => setCurrentPage('admin') }, "Админ Панел")
+                        ),
+                        e('div', { className: 'd-flex gap-3 align-items-center' },
+                            userRole !== 'guest' && e('span', { className: 'text-light small border-end pe-3 border-secondary' }, 
+                                e('i', { className: 'fa-regular fa-user text-warning me-2' }), `Здравей, ${loggedInUser}`
+                            ),
+                            e('button', { 
+                                className: 'btn btn-gold btn-sm px-3 rounded-0', 
+                                'data-bs-toggle': 'modal', 
+                                'data-bs-target': '#cartModal',
+                                onClick: () => setOrderSubmitted(false)
+                            }, 
+                                e('i', { className: 'fa-solid fa-cart-shopping me-1' }), `Количка (${cart.length})`
+                            ),
+                            userRole !== 'guest' ? 
+                                e('button', { className: 'btn btn-outline-danger btn-sm rounded-0', onClick: handleLogout }, "Изход") :
+                                e('button', { className: 'btn btn-outline-light btn-sm rounded-0', 'data-bs-toggle': 'modal', 'data-bs-target': '#authModal' }, "Вход / Регистрация")
+                        )
+                    )
+                ),
+
+                // СЪДЪРЖАНИЕ
+                e('main', { className: 'flex-grow-1' },
+                    currentPage === 'home' && e('header', { className: 'hero-section text-center d-flex align-items-center' },
+                        e('div', { className: 'container' },
+                            e('h1', null, "BARBERCRAFT SUPPLIES"),
+                            e('p', { className: 'lead text-light fs-5' }, "Първокласни принадлежности и луксозна козметика за професионални бръснари."),
+                            e('button', { className: 'btn btn-gold btn-lg px-5 rounded-0 py-3', onClick: () => setCurrentPage('shop') }, "Разгледай Каталога")
+                        )
+                    ),
+
+                    currentPage === 'shop' && e('div', { className: 'container py-5' },
+                        e('h2', { className: 'text-center section-title mb-5 text-uppercase' }, "Продуктов Каталог"),
+                        
+                        e('div', { className: 'row justify-content-center mb-4' },
+                            e('div', { className: 'col-md-6' },
+                                e('input', { type: 'text', className: 'form-control shadow-sm rounded-0 p-3', placeholder: 'Търсене на премиум оборудване...', onChange: e => setSearchQuery(e.target.value) })
+                            )
+                        ),
+
+                        e('div', { className: 'd-flex flex-wrap justify-content-center gap-2 mb-5' },
+                            CATEGORIES.map(cat => 
+                                e('button', {
+                                    key: cat,
+                                    className: `category-pill ${selectedCategory === cat ? 'active' : ''}`,
+                                    onClick: () => setSelectedCategory(cat)
+                                }, cat)
+                            )
+                        ),
+                        
+                        filteredProducts.length > 0 ? 
+                        e('div', { className: 'row g-4' },
+                            filteredProducts.map(product => 
+                                e('div', { className: 'col-md-3', key: product.id },
+                                    e('div', { className: 'card product-card h-100 shadow-sm' },
+                                        e('div', { className: 'product-image-container' }, e('img', { src: product.image, className: 'product-image', alt: product.name })),
+                                        e('div', { className: 'card-body d-flex flex-column p-3' },
+                                            e('span', { className: 'text-muted text-uppercase fw-bold mb-1 small', style: {fontSize: '11px', letterSpacing: '1px'} }, product.category),
+                                            e('h5', { className: 'card-title-serif text-dark' }, product.name),
+                                            e('p', { className: 'small text-muted flex-grow-1 mt-2' }, product.description),
+                                            e('div', { className: 'd-flex justify-content-between align-items-center mt-3 pt-2 border-top' },
+                                                e('span', { className: 'fw-bold text-dark fs-5' }, `€${product.price.toFixed(2)}`),
+                                                e('div', { className: 'd-flex gap-1' },
+                                                    e('button', { className: 'btn btn-gold btn-sm rounded-0', onClick: () => setCart([...cart, product]) }, "Купи"),
+                                                    userRole === 'admin' && e('button', { 
+                                                        className: 'btn btn-danger btn-sm rounded-0', 
+                                                        onClick: () => {
+                                                            if(confirm(`Сигурен ли си, че искаш да изтриеш "${product.name}"?`)) {
+                                                                setProducts(products.filter(p => p.id !== product.id));
+                                                            }
+                                                        } 
+                                                    }, "Изтрий")
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        ) : e('p', { className: 'text-center text-muted py-5' }, "Няма намерени продукти в тази категория."),
+
+                        e('hr', { className: 'my-5', style: {opacity: '0.1'} }),
+
+                        // РЕВЮТА СЕКЦИЯ
+                        e('div', { className: 'row mt-5 pt-3' },
+                            e('div', { className: 'col-md-7 mb-4' },
+                                e('h3', { className: 'mb-4 fw-bold text-uppercase', style: {letterSpacing: '1px', fontFamily: 'var(--font-serif)'} }, "Отзиви от професионалисти"),
+                                reviews.map(r => 
+                                    e('div', { className: 'card review-card p-4 mb-3 border-0 bg-white shadow-sm', key: r.id },
+                                        e('div', { className: 'd-flex justify-content-between align-items-start' },
+                                            e('div', { className: 'd-flex gap-3' },
+                                                e('span', { className: 'quote-icon' }, e('i', { className: 'fa-solid fa-quote-left' })),
+                                                e('div', null, 
+                                                    e('div', { className: 'd-flex align-items-center gap-2 mb-1' },
+                                                        e('h6', { className: 'fw-bold mb-0 text-dark fs-5' }, r.author),
+                                                        e('div', { className: 'stars-container ms-2' },
+                                                            Array.from({ length: r.rating || 5 }).map((_, i) => 
+                                                                e('i', { key: i, className: 'fa-solid fa-star me-1' })
+                                                            )
+                                                        )
+                                                    ),
+                                                    e('p', { className: 'mb-0 text-muted fst-italic' }, `"${r.comment}"`)
+                                                )
+                                            ),
+                                            userRole === 'admin' && e('button', {
+                                                className: 'btn btn-sm btn-outline-danger rounded-0',
+                                                style: { fontSize: '11px' },
+                                                onClick: () => {
+                                                    if (confirm(`Искаш ли да изтриеш отзива на ${r.author}?`)) {
+                                                        setReviews(reviews.filter(rev => rev.id !== r.id));
+                                                    }
+                                                }
+                                            }, "Изтрий")
+                                        )
+                                    )
+                                )
+                            ),
+                            e('div', { className: 'col-md-5' },
+                                e('div', { className: 'card p-4 border-0 shadow-sm bg-white rounded-0' },
+                                    e('h4', { className: 'fw-bold mb-3 text-uppercase' }, "Сподели мнение"),
+                                    e('form', { onSubmit: (ev) => {
+                                        ev.preventDefault();
+                                        const author = ev.target.author.value;
+                                        const rating = parseInt(ev.target.rating.value);
+                                        const comment = ev.target.comment.value;
+                                        setReviews([{ id: Date.now(), author, rating, comment }, ...reviews]);
+                                        ev.target.comment.value = '';
+                                    }},
+                                        e('div', { className: 'mb-3' }, 
+                                            e('label', { className: 'small fw-bold mb-1' }, "Вашето Име / Бръснарница"),
+                                            e('input', { 
+                                                type: 'text', 
+                                                name: 'author', 
+                                                className: 'form-control rounded-0', 
+                                                defaultValue: userRole === 'client' ? loggedInUser : '', 
+                                                key: loggedInUser, 
+                                                placeholder: 'Мастър бръснар...', 
+                                                required: true 
+                                            })
+                                        ),
+                                        e('div', { className: 'mb-3' }, 
+                                            e('label', { className: 'small fw-bold mb-1' }, "Оценка (Звезди)"),
+                                            e('select', { name: 'rating', className: 'form-select rounded-0', defaultValue: '5' },
+                                                e('option', { value: '5' }, '⭐⭐⭐⭐⭐ (5/5)'),
+                                                e('option', { value: '4' }, '⭐⭐⭐⭐ (4/5)'),
+                                                e('option', { value: '3' }, '⭐⭐⭐ (3/5)'),
+                                                e('option', { value: '2' }, '⭐⭐ (2/5)'),
+                                                e('option', { value: '1' }, '⭐ (1/5)')
+                                            )
+                                        ),
+                                        e('div', { className: 'mb-3' }, 
+                                            e('label', { className: 'small fw-bold mb-1' }, "Коментар"),
+                                            e('textarea', { name: 'comment', className: 'form-control rounded-0', rows: '4', placeholder: 'Как оценявате качеството на продуктите ни...', required: true })
+                                        ),
+                                        e('button', { type: 'submit', className: 'btn btn-dark-premium w-100 py-2 rounded-0' }, "Публикувай отзив")
+                                    )
+                                )
+                            )
+                        )
+                    ),
+
+                    currentPage === 'admin' && userRole === 'admin' && e('div', { className: 'container py-5' },
+                        e('div', { className: 'card p-4 mx-auto shadow bg-white rounded-0', style: { maxWidth: '600px', borderTop: '4px solid var(--gold-premium)' } },
+                            e('h2', { className: 'fw-bold text-uppercase border-bottom pb-2 mb-4' }, "Управление на инвентара"),
+                            e('form', { onSubmit: (ev) => {
+                                ev.preventDefault();
+                                const name = ev.target.pname.value;
+                                const price = parseFloat(ev.target.pprice.value);
+                                const desc = ev.target.pdesc.value;
+                                const cat = ev.target.pcat.value;
+                                const customImg = ev.target.pimg.value.trim();
+                                
+                                setProducts([...products, {
+                                    id: Date.now(),
+                                    name, 
+                                    price, 
+                                    description: desc,
+                                    category: cat,
+                                    image: customImg ? customImg : "https://images.pexels.com/photos/4004443/pexels-photo-4004443.jpeg?auto=compress&cs=tinysrgb&w=500"
+                                }]);
+                                alert("Продуктът е добавен успешно!");
+                                setCurrentPage('shop');
+                            }},
+                                e('div', { className: 'mb-3' },
+                                    e('label', { className: 'small fw-bold mb-1' }, "Име на продукта"),
+                                    e('input', { type: 'text', name: 'pname', className: 'form-control rounded-0', required: true })
+                                ),
+                                e('div', { className: 'mb-3' },
+                                    e('label', { className: 'small fw-bold mb-1' }, "Категория"),
+                                    e('select', { name: 'pcat', className: 'form-select rounded-0' },
+                                        e('option', { value: 'Машинки' }, 'Машинки'),
+                                        e('option', { value: 'Бръсначи' }, 'Бръсначи'),
+                                        e('option', { value: 'Стилизиране' }, 'Стилизиране'),
+                                        e('option', { value: 'Грижа' }, 'Грижа'),
+                                        e('option', { value: 'Инструменти' }, 'Инструменти'),
+                                        e('option', { value: 'Оборудване' }, 'Оборудване')
+                                    )
+                                ),
+                                e('div', { className: 'mb-3' },
+                                    e('label', { className: 'small fw-bold mb-1' }, "Цена (в евро €)"),
+                                    e('input', { type: 'number', step: '0.01', name: 'pprice', className: 'form-control rounded-0', required: true })
+                                ),
+                                e('div', { className: 'mb-3' },
+                                    e('label', { className: 'small fw-bold mb-1' }, "Път до снимка (напр. images/снимка.jpg)"),
+                                    e('input', { type: 'text', name: 'pimg', className: 'form-control rounded-0', placeholder: 'Оставете празно за картинка по подразбиране' })
+                                ),
+                                e('div', { className: 'mb-3' },
+                                    e('label', { className: 'small fw-bold mb-1' }, "Описание"),
+                                    e('textarea', { name: 'pdesc', className: 'form-control rounded-0', rows: '3', required: true })
+                                ),
+                                e('button', { type: 'submit', className: 'btn btn-gold w-100 py-2 rounded-0' }, "Добави в каталога")
+                            )
+                        )
+                    )
+                ),
+
+                // МОДАЛЕН ПРОЗОРЕЦ ЗА АВТЕНТИКАЦИЯ (ВХОД / РЕГИСТРАЦИЯ)
+                e('div', { className: 'modal fade', id: 'authModal', tabIndex: '-1' },
+                    e('div', { className: 'modal-dialog modal-sm modal-dialog-centered' },
+                        e('div', { className: 'modal-content' },
+                            e('div', { className: 'modal-header' }, 
+                                e('h5', { className: 'modal-title fw-bold text-uppercase' }, authMode === 'login' ? "Вход в системата" : "Нова Регистрация")
+                            ),
+                            e('div', { className: 'modal-body p-4' },
+                                authMode === 'login' ? 
+                                // ФОРМА ЗА ВХОД
+                                e('form', { onSubmit: handleLogin },
+                                    e('input', { type: 'text', value: username, className: 'form-control mb-2 rounded-0', placeholder: 'Потребителско име', onChange: ev => setUsername(ev.target.value), required: true }),
+                                    e('input', { type: 'password', value: password, className: 'form-control mb-2 rounded-0', placeholder: 'Парола', onChange: ev => setPassword(ev.target.value), required: true }),
+                                    authError && e('p', { className: 'text-danger small fw-bold mt-1' }, authError),
+                                    e('button', { type: 'submit', className: 'btn btn-gold w-100 mt-2 rounded-0 py-2' }, "Влез"),
+                                    e('p', { className: 'text-center small mt-3 mb-0' }, "Нямате профил? ", 
+                                        e('span', { className: 'auth-switch-link', onClick: () => { setAuthMode('register'); setAuthError(''); } }, "Регистрирай се")
+                                    )
+                                ) : 
+                                // ФОРМА ЗА РЕГИСТРАЦИЯ
+                                e('form', { onSubmit: handleRegister },
+                                    e('input', { type: 'text', value: regName, className: 'form-control mb-2 rounded-0', placeholder: 'Вашето Име (напр. Георги)', onChange: ev => setRegName(ev.target.value), required: true }),
+                                    e('input', { type: 'text', value: username, className: 'form-control mb-2 rounded-0', placeholder: 'Потребителско име', onChange: ev => setUsername(ev.target.value), required: true }),
+                                    e('input', { type: 'password', value: password, className: 'form-control mb-2 rounded-0', placeholder: 'Парола', onChange: ev => setPassword(ev.target.value), required: true }),
+                                    authError && e('p', { className: 'text-danger small fw-bold mt-1' }, authError),
+                                    e('button', { type: 'submit', className: 'btn btn-dark-premium w-100 mt-2 rounded-0 py-2' }, "Създай профил"),
+                                    e('p', { className: 'text-center small mt-3 mb-0' }, "Вече имате профил? ", 
+                                        e('span', { className: 'auth-switch-link', onClick: () => { setAuthMode('login'); setAuthError(''); } }, "Влез тук")
+                                    )
+                                ),
+                                authMode === 'login' && e('div', { className: 'text-muted mt-3 pt-2 border-top small' }, 
+                                    e('p', { className: 'mb-0 font-monospace' }, "Админ: admin | barber2026")
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                // МОДАЛ ЗА КОЛИЧКА
+                e('div', { className: 'modal fade', id: 'cartModal', tabIndex: '-1' },
+                    e('div', { className: 'modal-dialog modal-dialog-centered' },
+                        e('div', { className: 'modal-content' },
+                            e('div', { className: 'modal-header' }, 
+                                e('h5', { className: 'modal-title fw-bold text-uppercase' }, "Вашата количка")
+                            ),
+                            e('div', { className: 'modal-body p-4' },
+                                orderSubmitted ? e('p', { className: 'text-success fw-bold text-center fs-5 my-3' }, "Поръчката е изпратена успешно!") :
+                                cart.length > 0 ? e('div', null,
+                                    cart.map((item, idx) => e('div', { key: idx, className: 'border-bottom pb-2 mb-2 d-flex justify-content-between align-items-center' }, 
+                                        e('span', null, item.name), 
+                                        e('div', { className: 'd-flex align-items-center gap-3' },
+                                            e('b', null, `€${item.price.toFixed(2)}`),
+                                            e('button', { 
+                                                className: 'btn btn-sm btn-outline-danger border-0', 
+                                                onClick: () => removeFromCart(idx)
+                                            }, e('i', { className: 'fa-solid fa-trash' }))
+                                        )
+                                    )),
+                                    e('h5', { className: 'fw-bold mt-3 text-end text-dark' }, `Общо: €${cartTotal.toFixed(2)}`),
+                                    e('button', { className: 'btn btn-dark-premium w-100 mt-3 py-2 rounded-0', onClick: () => { setOrderSubmitted(true); setCart([]); } }, "Финализирай поръчката")
+                                ) : e('p', { className: 'text-muted text-center my-4' }, "Количката е празна.")
+                            )
+                        )
+                    )
+                ),
+
+                // ФУТЪР
+                e('footer', { className: 'text-center text-white-50 mt-auto' }, 
+                    e('div', { className: 'container' }, 
+                        e('p', { className: 'mb-1 text-light fw-bold', style: {letterSpacing: '1px'} }, "BARBERCRAFT SUPPLIES"),
+                        e('div', { className: 'small' }, "© 2026 Всички права запазени. Училищен ИТ Проект.")
+                    )
+                )
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(e(App));
+    </script>
+</body>
+</html>
